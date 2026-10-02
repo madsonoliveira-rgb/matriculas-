@@ -1,0 +1,72 @@
+SISTEMA DE MATRÍCULAS — COMUNICAÇÃO ENTRE SERVIÇOS
+
+COMO EXECUTAR
+1. Instale o Node.js 22 ou superior no computador.
+2. Extraia o ZIP e abra a pasta matriculas no VS Code.
+3. Abra Terminal > Novo Terminal e execute:
+   npm start
+4. No navegador, acesse http://localhost:3000
+5. Para encerrar, pressione Ctrl+C no terminal.
+
+Não é necessário executar npm install: o projeto usa apenas módulos do Node.js.
+Não abra o index.html diretamente nem use somente Live Server, pois a atividade
+depende dos dois serviços HTTP iniciados pelo comando npm start.
+
+O QUE FOI FEITO
+Uma página de matrícula com nome, e-mail, curso e turno. O seletor permite
+comparar a versão inicial síncrona e sua conversão para a versão assíncrona.
+Os dois fluxos usam o mesmo formulário e o mesmo serviço acadêmico.
+
+SÍNCRONO
+O navegador envia POST /api/sincrono. A API chama o serviço acadêmico na porta
+3001 e aguarda seu resultado. Só então responde ao navegador com a matrícula
+concluída (201) ou com o erro. Há uma demora de 2 segundos no serviço acadêmico
+para deixar visível a espera. Essa demora representa uma conferência de dados.
+
+ASSÍNCRONO
+O navegador envia POST /api/assincrono. A API valida os campos, coloca o pedido
+na fila e responde 202 (aceito) com um protocolo, antes de concluir a matrícula.
+Um consumidor retira os pedidos da fila em ordem e chama o serviço acadêmico.
+O resultado fica associado ao protocolo. A página consulta GET /api/pedidos/ID
+a cada 700 ms, até obter uma conclusão ou uma falha. Enquanto isso, o aluno
+pode enviar outra solicitação. Aceitar o pedido não significa aprovar a matrícula.
+
+SOBRE A DIFERENÇA
+Os dois casos usam fetch no navegador para manter a interface responsiva.
+A classificação síncrona aqui é do fluxo de comunicação: no primeiro caso,
+a resposta HTTP inicial depende da conclusão do serviço acadêmico. No segundo,
+a resposta inicial apenas aceita o pedido e a conclusão ocorre depois, fora
+daquela requisição. Usar async/await sozinho não transforma esse fluxo em fila.
+
+TESTE MANUAL
+1. Selecione Síncrono, preencha dados fictícios e envie. A confirmação leva
+   aproximadamente 2 segundos e o botão aguarda o resultado final.
+2. Selecione Assíncrono e use outro e-mail. O protocolo aparece rapidamente,
+   o botão é liberado e a confirmação chega depois.
+3. Envie dois pedidos assíncronos com e-mails diferentes: o segundo aguarda
+   o primeiro na fila. Ambos recebem protocolos antes da conclusão.
+4. Repita e-mail e curso de uma matrícula concluída. O sistema informa a
+   duplicidade. No fluxo assíncrono, a falha aparece após o processamento.
+5. Tente enviar sem preencher campos ou com e-mail inválido.
+6. Abra Fluxogramas no topo da página para ver os dois desenhos.
+
+ARQUIVOS
+servidor.js           API, fila, consumidor e arquivos da página.
+academico.js          Serviço acadêmico e registro das matrículas.
+http.js               Leitura e resposta JSON.
+public/index.html    Formulário de matrícula.
+public/app.js        Envio e acompanhamento dos pedidos.
+public/estilo.css    Estilos e adaptação para celular.
+public/fluxogramas.html          Página dos fluxogramas.
+public/fluxogramas/sincrono.svg   Fluxograma síncrono.
+public/fluxogramas/assincrono.svg Fluxograma assíncrono.
+
+Os SVGs podem ser abertos no navegador independentemente do servidor.
+
+LIMITES DA DEMONSTRAÇÃO
+Os serviços HTTP usam portas diferentes (3000 e 3001), mas são iniciados no
+mesmo processo para simplificar a execução. A fila, os protocolos e as matrículas
+ficam em memória e são apagados ao reiniciar. O histórico visual é desta página
+e se perde ao recarregar. Não há autenticação, banco de dados ou fila durável;
+esta é uma atividade local, não um sistema pronto para uso real. Use dados
+fictícios. A regra de duplicidade considera a combinação de e-mail e curso.

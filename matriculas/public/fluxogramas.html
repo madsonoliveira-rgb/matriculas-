@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fluxogramas | Matrículas</title>
+  <link rel="stylesheet" href="/estilo.css">
+</head>
+<body>
+  <header><a class="marca" href="/">SECRETARIA ACADÊMICA</a><a href="/">Voltar à matrícula</a></header>
+  <main>
+    <p class="etiqueta">COMUNICAÇÃO ENTRE SERVIÇOS</p>
+    <h1>Fluxos de matrícula</h1>
+    <div class="diagramas">
+      <section class="painel"><h2>1. Síncrono</h2>
+        <p>A API aguarda o serviço acadêmico concluir antes de responder ao aluno.</p>
+        <img src="/fluxogramas/sincrono.svg" alt="Fluxograma síncrono: formulário, validação, chamada ao serviço acadêmico, espera e resposta final. Dados inválidos retornam um erro.">
+        <a href="/fluxogramas/sincrono.svg" download>Baixar fluxograma síncrono</a>
+      </section>
+      <section class="painel"><h2>2. Assíncrono</h2>
+        <p>A API responde com um protocolo. Um consumidor processa a fila, e a página consulta o resultado.</p>
+        <img src="/fluxogramas/assincrono.svg" alt="Fluxograma assíncrono: formulário, validação, fila, protocolo, processamento em segundo plano e consulta repetida até o resultado final.">
+        <a href="/fluxogramas/assincrono.svg" download>Baixar fluxograma assíncrono</a>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

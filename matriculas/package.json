@@ -1,0 +1,9 @@
+{
+  "name": "matriculas",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Sistema de matrículas com comunicação síncrona e assíncrona",
+  "scripts": { "start": "node servidor.js" },
+  "engines": { "node": ">=22" }
+}

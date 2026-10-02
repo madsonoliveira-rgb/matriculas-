@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Secretaria | Matrículas</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23194374'/%3E%3Ctext x='8' y='29' font-size='27' fill='white'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/estilo.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header><a class="marca" href="/">SECRETARIA ACADÊMICA</a><a href="/fluxogramas">Fluxogramas</a></header>
+  <main>
+    <p class="etiqueta">PORTAL DO ALUNO</p>
+    <h1>Nova matrícula</h1>
+    <p class="introducao">Preencha seus dados e escolha o curso e o turno.</p>
+    <div class="grade">
+      <section class="painel">
+        <form id="formulario">
+          <fieldset><legend>Fluxo de comunicação</legend>
+            <div class="opcoes">
+              <label><input type="radio" name="modo" value="sincrono" checked> Síncrono</label>
+              <label><input type="radio" name="modo" value="assincrono"> Assíncrono</label>
+            </div>
+            <p id="explicacao" class="ajuda">A confirmação chega após o processamento da matrícula.</p>
+          </fieldset>
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" autocomplete="name" minlength="3" maxlength="100" required>
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="150" required>
+          <div class="campos">
+            <div><label for="curso">Curso</label><select id="curso" name="curso" required>
+              <option value="">Selecione</option><option>Sistemas de Informação</option><option>Administração</option><option>Pedagogia</option>
+            </select></div>
+            <div><label for="turno">Turno</label><select id="turno" name="turno" required>
+              <option value="">Selecione</option><option>Manhã</option><option>Tarde</option><option>Noite</option>
+            </select></div>
+          </div>
+          <button id="enviar" type="submit">Solicitar matrícula</button>
+        </form>
+      </section>
+      <aside class="painel acompanhamento">
+        <h2>Acompanhamento</h2>
+        <p class="ajuda">As solicitações desta sessão aparecem aqui.</p>
+        <p id="vazio">Você ainda não enviou uma matrícula.</p>
+        <div id="pedidos" aria-live="polite" aria-relevant="additions text"></div>
+      </aside>
+    </div>
+    <footer>Ambiente de demonstração. Use dados fictícios.</footer>
+  </main>
+</body>
+</html>
